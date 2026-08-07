@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Tekstur honeycomb tipis di background halaman — nod ke produk madu */
+  .bg-honeycomb::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath d='M28 0 L56 16 L56 48 L28 64 L0 48 L0 16 Z' fill='none' stroke='%23C69A2E' stroke-opacity='0.06' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 56px 98px;
+  }
+
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c69a2e, transparent);
+    opacity: 0.5;
+  }
+
+  .select-arrow {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235E6E63' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+}
+
+@layer components {
+  /* --- Validasi field: shake halus + transisi warna --- */
+  .field input,
+  .field select {
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+  .field.invalid input,
+  .field.invalid select {
+    border-color: #b4453b;
+    animation: fieldShake 340ms ease;
+  }
+  .field .err {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      max-height 220ms ease,
+      opacity 200ms ease,
+      margin-top 220ms ease;
+  }
+  .field.invalid .err {
+    display: block;
+    max-height: 40px;
+    opacity: 1;
+  }
+
+  @keyframes fieldShake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-4px);
+    }
+    50% {
+      transform: translateX(3px);
+    }
+    75% {
+      transform: translateX(-2px);
+    }
+  }
+
+  /* --- Dropzone --- */
+  #dz-logo,
+  #dz-foto {
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+  #dz-logo.dragover,
+  #dz-foto.dragover {
+    border-color: #2c6e56;
+    background: rgba(44, 110, 86, 0.07);
+    transform: scale(1.015);
+  }
+  #dz-logo.filled,
+  #dz-foto.filled {
+    padding: 8px;
+    border-style: solid;
+  }
+
+  .preview {
+    opacity: 0;
+    transform: scale(0.96);
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+  .preview.show {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .upload-err {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      max-height 200ms ease,
+      opacity 180ms ease;
+  }
+  .upload-err.show {
+    display: block;
+    max-height: 30px;
+    opacity: 1;
+  }
+
+  /* --- Transisi form -> success --- */
+  form {
+    transition: opacity 200ms ease;
+  }
+  form.hide {
+    display: none;
+  }
+  .success {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 320ms ease,
+      transform 320ms ease;
+  }
+  .success.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- CTA utama: gradasi emerald, teks putih, animasi profesional --- */
+  #submitBtn {
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+    background-size: 160% 160%;
+    background-position: 0% 50%;
+    transition:
+      transform 200ms ease,
+      box-shadow 200ms ease,
+      background-position 500ms ease;
+  }
+  #submitBtn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.16) 42%,
+      transparent 60%
+    );
+    transform: translateX(-120%);
+    transition: transform 700ms ease;
+  }
+  #submitBtn:hover:not(:disabled) {
+    box-shadow: 0 16px 34px -14px rgba(14, 36, 28, 0.55);
+    background-position: 100% 50%;
+    transform: translateY(-2px);
+  }
+  #submitBtn:hover:not(:disabled)::before {
+    transform: translateX(120%);
+  }
+  #submitBtn:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  #submitBtn:disabled {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .btn-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 650ms linear infinite;
+    vertical-align: -2px;
+    margin-right: 7px;
+  }
+}
+
+@keyframes fadeCorner {
+  to {
+    opacity: 1;
+  }
+}
+.corner-fade {
+  opacity: 0;
+  animation: fadeCorner 700ms 150ms ease forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .corner-fade {
+    animation: none;
+    opacity: 1;
+  }
+  #submitBtn,
+  .field.invalid input,
+  .field.invalid select {
+    animation: none !important;
+  }
+}

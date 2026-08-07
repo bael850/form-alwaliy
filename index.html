@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konsultasi Maklon Gratis — Al-Waliy Sejahtera</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dist/style.css" />
+  </head>
+  <body
+    class="min-h-screen bg-parchment font-sans text-ink flex items-center justify-center px-4 py-11 relative overflow-x-hidden bg-honeycomb"
+  >
+    <div class="w-full max-w-xl relative z-10">
+      <div
+        class="bg-cream rounded-card border border-line shadow-[0_1px_2px_rgba(14,36,28,0.05),0_30px_60px_-28px_rgba(14,36,28,0.35)] p-6 md:p-8 relative overflow-hidden"
+      >
+        <!-- Ornamen sudut emas -->
+        <div class="corner-fade absolute top-0 left-0 w-16 h-16">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M0 20 Q20 20 20 0" stroke="#C69A2E" stroke-width="1.4" />
+            <path
+              d="M0 32 Q32 32 32 0"
+              stroke="#C69A2E"
+              stroke-width="1"
+              opacity="0.55"
+            />
+            <circle cx="20" cy="20" r="2.4" fill="#C69A2E" />
+          </svg>
+        </div>
+        <div class="corner-fade absolute top-0 right-0 w-16 h-16 -scale-x-100">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M0 20 Q20 20 20 0" stroke="#C69A2E" stroke-width="1.4" />
+            <path
+              d="M0 32 Q32 32 32 0"
+              stroke="#C69A2E"
+              stroke-width="1"
+              opacity="0.55"
+            />
+            <circle cx="20" cy="20" r="2.4" fill="#C69A2E" />
+          </svg>
+        </div>
+
+        <!-- Brand -->
+        <div class="flex items-center gap-2.5 mb-4">
+          <img
+            src="https://alwaliy-sejahtera.com/images/logo.png"
+            alt="Al-Waliy Sejahtera"
+            class="h-9 w-auto block"
+          />
+          <div
+            class="font-heading font-semibold text-[18px] leading-tight text-emerald-900"
+          >
+            Al-Waliy Sejahtera
+            <span
+              class="block font-sans font-semibold text-[10px] tracking-[0.11em] uppercase text-ink-soft mt-0.5"
+              >Maklon Herbal &amp; Madu</span
+            >
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="flex flex-wrap gap-1.5 mb-5">
+          <span
+            class="flex items-center gap-1.5 pl-1.5 pr-2.5 py-[3px] bg-white border border-line rounded-full text-[10.5px] font-semibold text-emerald-900"
+          >
+            <img
+              src="https://alwaliy-sejahtera.com/images/certs/halal.png"
+              alt=""
+              class="h-3.5 w-auto"
+            />Halal MUI
+          </span>
+          <span
+            class="flex items-center gap-1.5 pl-1.5 pr-2.5 py-[3px] bg-white border border-line rounded-full text-[10.5px] font-semibold text-emerald-900"
+          >
+            <img
+              src="https://alwaliy-sejahtera.com/images/certs/bpom.png"
+              alt=""
+              class="h-3.5 w-auto"
+            />BPOM RI
+          </span>
+          <span
+            class="flex items-center gap-1.5 pl-1.5 pr-2.5 py-[3px] bg-white border border-line rounded-full text-[10.5px] font-semibold text-emerald-900"
+          >
+            <img
+              src="https://alwaliy-sejahtera.com/images/certs/cpotb.png"
+              alt=""
+              class="h-3.5 w-auto"
+            />CPOTB
+          </span>
+        </div>
+
+        <h1
+          class="font-heading font-semibold text-[25px] leading-[1.2] mb-2.5 text-emerald-950"
+        >
+          Wujudkan brand herbalmu bersama
+          <span class="text-emerald-700">Al-Waliy Sejahtera</span>
+        </h1>
+        <p
+          class="text-[13.5px] leading-relaxed text-ink-soft mb-5 max-w-[48ch]"
+        >
+          Isi data singkat untuk konsultasi maklon GRATIS — dari formulasi,
+          produksi, sampai kemasan siap jual. Bisa unggah logo &amp; referensi
+          produk langsung di sini.
+        </p>
+
+        <div class="divider-gold mb-5"></div>
+
+        <form id="leadForm" novalidate class="flex flex-col gap-3.5">
+          <div class="field" id="field-nama">
+            <label for="nama" class="block text-[12.5px] font-semibold mb-1"
+              >Nama Lengkap <span class="text-gold">*</span></label
+            >
+            <input
+              type="text"
+              id="nama"
+              name="nama"
+              placeholder="Nama sesuai KTP"
+              autocomplete="name"
+              class="w-full text-[14.5px] px-[14px] py-[11px] rounded-[11px] border-[1.5px] border-line bg-white focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/15"
+            />
+            <div class="err hidden text-[12px] text-error mt-1.5">
+              Nama wajib diisi.
+            </div>
+          </div>
+
+          <div class="field" id="field-wa">
+            <label for="wa" class="block text-[12.5px] font-semibold mb-1"
+              >No. WhatsApp <span class="text-gold">*</span></label
+            >
+            <div class="flex gap-2">
+              <div
+                class="flex items-center gap-1.5 px-3 rounded-[11px] border-[1.5px] border-line bg-white text-[14.5px] text-ink-soft whitespace-nowrap shrink-0"
+              >
+                <svg viewBox="0 0 24 18" class="w-[18px] h-[13px] rounded-sm">
+                  <rect width="24" height="18" fill="#FFFFFF" />
+                  <rect width="24" height="9" fill="#CE1126" />
+                </svg>
+                +62
+              </div>
+              <input
+                type="tel"
+                id="wa"
+                name="wa"
+                placeholder="8123456789"
+                inputmode="numeric"
+                autocomplete="tel-national"
+                class="w-full text-[14.5px] px-[14px] py-[11px] rounded-[11px] border-[1.5px] border-line bg-white focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/15"
+              />
+            </div>
+            <div class="err hidden text-[12px] text-error mt-1.5">
+              Masukkan nomor WhatsApp yang valid (min. 8 digit).
+            </div>
+          </div>
+
+          <div class="field" id="field-kategori">
+            <label for="kategori" class="block text-[12.5px] font-semibold mb-1"
+              >Kategori Produk <span class="text-gold">*</span></label
+            >
+            <select
+              id="kategori"
+              name="kategori"
+              class="select-arrow appearance-none w-full text-[14.5px] pl-[14px] pr-9 py-[11px] rounded-[11px] border-[1.5px] border-line bg-white focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/15"
+            >
+              <option value="" selected disabled>Pilih kategori</option>
+              <option value="lambung">Lambung (maag, asam lambung)</option>
+              <option value="tenggorokan">Tenggorokan (batuk, radang)</option>
+              <option value="kebugaran">Kebugaran &amp; stamina</option>
+              <option value="vitalitas">Vitalitas pria</option>
+              <option value="cuka">Cuka herbal (apel/lemon/nanas)</option>
+              <option value="anak">Produk anak</option>
+              <option value="custom">Formula custom lainnya</option>
+            </select>
+            <div class="err hidden text-[12px] text-error mt-1.5">
+              Pilih kategori produk.
+            </div>
+          </div>
+
+          <div class="field" id="field-budget">
+            <label for="budget" class="block text-[12.5px] font-semibold mb-1"
+              >Budget Produksi Berapa? <span class="text-gold">*</span></label
+            >
+            <select
+              id="budget"
+              name="budget"
+              class="select-arrow appearance-none w-full text-[14.5px] pl-[14px] pr-9 py-[11px] rounded-[11px] border-[1.5px] border-line bg-white focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/15"
+            >
+              <option value="" selected disabled>Pilih kisaran budget</option>
+              <option value="<10jt">Di bawah Rp 10 juta</option>
+              <option value="10-50jt">Rp 10 juta – Rp 50 juta</option>
+              <option value="50-100jt">Rp 50 juta – Rp 100 juta</option>
+              <option value=">100jt">Di atas Rp 100 juta</option>
+              <option value="belum-tahu">Belum tahu / masih riset</option>
+            </select>
+            <div class="err hidden text-[12px] text-error mt-1.5">
+              Pilih salah satu kisaran budget.
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="block text-[12.5px] font-semibold mb-1"
+              >Logo &amp; Referensi Produk
+              <span class="text-ink-soft italic font-normal"
+                >(opsional)</span
+              ></label
+            >
+            <div class="grid grid-cols-2 gap-3.5 max-[480px]:grid-cols-1">
+              <div
+                id="dz-logo"
+                tabindex="0"
+                role="button"
+                aria-label="Unggah logo brand"
+                class="relative border-[1.5px] border-dashed border-line rounded-[14px] bg-white min-h-[108px] flex flex-col items-center justify-center text-center gap-1.5 p-3 cursor-pointer hover:border-gold hover:bg-[#FFFDF6] data-[filled=true]:p-2 data-[filled=true]:border-solid"
+              >
+                <input
+                  type="file"
+                  id="file-logo"
+                  accept="image/*"
+                  class="hidden"
+                />
+                <svg
+                  class="w-[26px] h-[26px] text-gold"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M12 16V4M12 4L7 9M12 4l5 5"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div class="text-[12px] font-semibold">Logo Brand</div>
+                <div class="text-[10.5px] text-ink-soft">
+                  Klik atau tarik file
+                </div>
+                <div
+                  id="preview-logo"
+                  class="preview hidden relative w-full h-[90px] rounded-[9px] overflow-hidden"
+                >
+                  <img
+                    id="img-logo"
+                    src=""
+                    alt="Preview logo"
+                    class="w-full h-full object-cover block"
+                  />
+                  <button
+                    type="button"
+                    class="remove absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-emerald-950/75 text-white flex items-center justify-center text-sm"
+                    data-target="logo"
+                    aria-label="Hapus logo"
+                  >
+                    ×
+                  </button>
+                  <div
+                    id="filename-logo"
+                    class="filename absolute inset-x-0 bottom-0 bg-gradient-to-t from-emerald-950/70 to-transparent text-white text-[10px] px-2 pt-3 pb-1.5 text-left truncate"
+                  ></div>
+                </div>
+              </div>
+
+              <div
+                id="dz-foto"
+                tabindex="0"
+                role="button"
+                aria-label="Unggah foto produk atau referensi"
+                class="relative border-[1.5px] border-dashed border-line rounded-[14px] bg-white min-h-[108px] flex flex-col items-center justify-center text-center gap-1.5 p-3 cursor-pointer hover:border-gold hover:bg-[#FFFDF6] data-[filled=true]:p-2 data-[filled=true]:border-solid"
+              >
+                <input
+                  type="file"
+                  id="file-foto"
+                  accept="image/*"
+                  class="hidden"
+                />
+                <svg
+                  class="w-[26px] h-[26px] text-gold"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M12 16V4M12 4L7 9M12 4l5 5"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div class="text-[12px] font-semibold">Foto / Referensi</div>
+                <div class="text-[10.5px] text-ink-soft">
+                  Klik atau tarik file
+                </div>
+                <div
+                  id="preview-foto"
+                  class="preview hidden relative w-full h-[90px] rounded-[9px] overflow-hidden"
+                >
+                  <img
+                    id="img-foto"
+                    src=""
+                    alt="Preview foto"
+                    class="w-full h-full object-cover block"
+                  />
+                  <button
+                    type="button"
+                    class="remove absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-emerald-950/75 text-white flex items-center justify-center text-sm"
+                    data-target="foto"
+                    aria-label="Hapus foto"
+                  >
+                    ×
+                  </button>
+                  <div
+                    id="filename-foto"
+                    class="filename absolute inset-x-0 bottom-0 bg-gradient-to-t from-emerald-950/70 to-transparent text-white text-[10px] px-2 pt-3 pb-1.5 text-left truncate"
+                  ></div>
+                </div>
+              </div>
+
+              <div
+                id="upload-err"
+                class="upload-err hidden col-span-2 text-[11px] text-error mt-1.5"
+              >
+                File harus berupa gambar dan maksimal 5MB.
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="submitBtn"
+            class="mt-1 w-full py-[15px] rounded-[13px] border-none bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-900 font-bold text-[15px] tracking-wide shadow-[0_12px_26px_-12px_rgba(14,36,28,0.6)] disabled:cursor-progress"
+          >
+            <span id="submitBtnLabel">Mulai Konsultasi Gratis</span>
+          </button>
+
+          <a
+            href="https://wa.me/6281515264972?text=Assalamualaikum%2C%20saya%20mau%20tanya%20terkait%20maklon"
+            target="_blank"
+            rel="noopener"
+            class="mt-3 flex items-center justify-center gap-1.5 text-[12.5px] font-semibold text-emerald-700 hover:underline"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-[15px] h-[15px]"
+            >
+              <path
+                d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1120 12a8 8 0 01-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5s-.6-1.5-.9-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 2 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.5-.3z"
+              />
+            </svg>
+            Atau chat langsung via WhatsApp
+          </a>
+
+          <p class="mt-4 text-[11px] leading-relaxed text-ink-soft text-center">
+            Data kamu hanya digunakan untuk keperluan konsultasi maklon Al-Waliy
+            Sejahtera dan tidak dibagikan ke pihak lain.
+          </p>
+        </form>
+
+        <div
+          id="successBox"
+          class="success hidden text-center pt-9 pb-1.5 px-1"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            class="w-[46px] h-[46px] mx-auto mb-3.5"
+          >
+            <circle cx="12" cy="12" r="11" fill="#EAF3EC" />
+            <path
+              d="M7 12.5l3 3 7-7"
+              stroke="#1E5340"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <h2 class="font-heading font-semibold text-2xl mb-2">Terkirim!</h2>
+          <p class="text-[13.5px] leading-relaxed text-ink-soft">
+            Terima kasih, data kamu sudah kami terima.<br />Tim Al-Waliy
+            Sejahtera akan menghubungi lewat WhatsApp dalam 1x24 jam.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="dist/script.js" defer></script>
+  </body>
+</html>

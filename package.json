@@ -1,0 +1,17 @@
+{
+  "name": "alwaliy-form-konsultasi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Form konsultasi maklon Al-Waliy Sejahtera untuk link di bio Instagram",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/style.css --minify",
+    "build:js": "tsc",
+    "build": "npm run build:css && npm run build:js",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./dist/style.css --watch",
+    "watch:js": "tsc --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.5.4"
+  }
+}
