@@ -125,3 +125,30 @@
     animation: none;
   }
 }
+
+@layer components {
+  .chip {
+    @apply relative block cursor-pointer;
+  }
+  .chip input {
+    @apply absolute opacity-0;
+  }
+  .chip span {
+    @apply flex items-center justify-center rounded-card border-[1.5px] border-line bg-white px-2 py-2.5 text-center text-sm font-semibold text-ink-soft transition-colors;
+  }
+  .chip:hover span {
+    border-color: #2d6a4f;
+  }
+  .chip input:checked + span {
+    @apply border-forest bg-forest text-white;
+  }
+  .chip input:focus-visible + span {
+    @apply ring-4 ring-forest/20;
+  }
+  .panel {
+    @apply hidden;
+  }
+  .panel.show {
+    @apply flex flex-col gap-4;
+  }
+}

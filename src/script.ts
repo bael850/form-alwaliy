@@ -1,213 +1,176 @@
-// Form konsultasi maklon Al-Waliy Sejahtera
-// Compile: npm run build:js  (menghasilkan dist/script.js)
+type Intent = "produk" | "pesanan" | "maklon" | "lainnya";
 
-type UploadKey = "logo" | "foto";
+// Ganti nomor di sini bila perlu.
+const WA_UMUM = "6282110689827";
+const WA_MAKLON = "6281515264972";
+const MAX_SIZE = 5 * 1024 * 1024;
 
-interface UploadState {
-  logo: File | null;
-  foto: File | null;
-}
-
-const MAX_SIZE = 5 * 1024 * 1024; // 5MB
-const WA_NUMBER = "6281515264972";
-
-function qs<T extends HTMLElement>(
-  selector: string,
-  root: ParentNode = document,
-): T {
-  const el = root.querySelector<T>(selector);
-  if (!el) throw new Error(`Element not found: ${selector}`);
-  return el;
-}
-
-function byId<T extends HTMLElement>(id: string): T {
-  const el = document.getElementById(id) as T | null;
-  if (!el) throw new Error(`Element not found: #${id}`);
-  return el;
-}
+const $ = <T extends HTMLElement = HTMLElement>(id: string): T =>
+  document.getElementById(id) as T;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const form = byId<HTMLFormElement>("leadForm");
-  const submitBtn = byId<HTMLButtonElement>("submitBtn");
-  const submitBtnLabel = byId<HTMLSpanElement>("submitBtnLabel");
-  const successBox = byId<HTMLDivElement>("successBox");
-  const uploadErr = byId<HTMLDivElement>("upload-err");
+  const form = $<HTMLFormElement>("leadForm");
+  const nama = $<HTMLInputElement>("nama");
+  const wa = $<HTMLInputElement>("wa");
+  const produk = $<HTMLSelectElement>("produk");
+  const kategori = $<HTMLSelectElement>("kategori");
+  const budget = $<HTMLSelectElement>("budget");
+  const pesan = $<HTMLTextAreaElement>("pesan");
+  const pesanLabel = $("pesanLabel");
+  const upErr = $("upload-err");
+  const uploads: Record<string, File | null> = { logo: null, foto: null };
 
-  const namaInput = byId<HTMLInputElement>("nama");
-  const waInput = byId<HTMLInputElement>("wa");
-  const kategoriSelect = byId<HTMLSelectElement>("kategori");
-  const budgetSelect = byId<HTMLSelectElement>("budget");
+  const intent = (): Intent | "" =>
+    (form.querySelector<HTMLInputElement>('input[name="intent"]:checked')
+      ?.value as Intent) ?? "";
+  const label = (s: HTMLSelectElement) =>
+    s.selectedOptions[0]?.textContent ?? "";
 
-  const uploads: UploadState = { logo: null, foto: null };
-
-  function setInvalid(fieldId: string, invalid: boolean): void {
-    byId(fieldId).classList.toggle("invalid", invalid);
+  function syncPanels(): void {
+    const cur = intent();
+    document.querySelectorAll<HTMLElement>(".panel").forEach((p) => {
+      p.classList.toggle(
+        "show",
+        (p.dataset.for ?? "").split(" ").includes(cur),
+      );
+    });
+    pesanLabel.textContent =
+      cur === "maklon" ? "Catatan tambahan (opsional)" : "Pesan Anda";
   }
+  form.querySelectorAll('input[name="intent"]').forEach((r) =>
+    r.addEventListener("change", () => {
+      $("field-intent").classList.remove("invalid");
+      syncPanels();
+    }),
+  );
 
-  function wireDropzone(key: UploadKey): void {
-    const dz = byId<HTMLDivElement>(`dz-${key}`);
-    const input = byId<HTMLInputElement>(`file-${key}`);
-    const preview = byId<HTMLDivElement>(`preview-${key}`);
-    const img = byId<HTMLImageElement>(`img-${key}`);
-    const filenameEl = byId<HTMLDivElement>(`filename-${key}`);
-    const removeBtn = qs<HTMLButtonElement>(".remove", preview);
+  wa.addEventListener("input", () => {
+    wa.value = wa.value.replace(/\D/g, "");
+  });
 
-    function openPicker(e: MouseEvent): void {
-      const target = e.target as HTMLElement;
-      if (target.closest(".remove")) return;
-      input.click();
-    }
+  function wireDropzone(key: string): void {
+    const dz = $(`dz-${key}`);
+    const input = $<HTMLInputElement>(`file-${key}`);
+    const img = $<HTMLImageElement>(`img-${key}`);
+    const prev = $(`preview-${key}`);
+    const name = $(`filename-${key}`);
+    const remove = dz.querySelector<HTMLButtonElement>(".remove")!;
 
-    dz.addEventListener("click", openPicker);
-    dz.addEventListener("keydown", (e: KeyboardEvent) => {
+    const take = (f?: File | null): void => {
+      if (!f) return;
+      if (!f.type.startsWith("image/") || f.size > MAX_SIZE) {
+        upErr.classList.add("show");
+        return;
+      }
+      upErr.classList.remove("show");
+      uploads[key] = f;
+      const reader = new FileReader();
+      reader.onload = () => {
+        img.src = reader.result as string;
+        name.textContent = f.name;
+        prev.classList.add("show");
+        dz.classList.add("filled");
+      };
+      reader.readAsDataURL(f);
+    };
+
+    dz.addEventListener("click", () => input.click());
+    dz.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         input.click();
       }
     });
-
-    dz.addEventListener("dragover", (e: DragEvent) => {
-      e.preventDefault();
-      dz.classList.add("dragover");
-    });
-    dz.addEventListener("dragleave", () => dz.classList.remove("dragover"));
-    dz.addEventListener("drop", (e: DragEvent) => {
-      e.preventDefault();
-      dz.classList.remove("dragover");
-      const file = e.dataTransfer?.files?.[0];
-      if (file) handleFile(file);
-    });
-
-    input.addEventListener("change", () => {
-      const file = input.files?.[0];
-      if (file) handleFile(file);
-    });
-
-    function handleFile(file: File): void {
-      uploadErr.classList.remove("show");
-
-      if (!file.type.startsWith("image/")) {
-        uploadErr.classList.add("show");
-        return;
-      }
-      if (file.size > MAX_SIZE) {
-        uploadErr.classList.add("show");
-        return;
-      }
-
-      uploads[key] = file;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        img.src = ev.target?.result as string;
-        filenameEl.textContent = file.name;
-        preview.classList.add("show");
-        dz.classList.add("filled");
-      };
-      reader.readAsDataURL(file);
-    }
-
-    removeBtn.addEventListener("click", (e: MouseEvent) => {
+    input.addEventListener("click", (e) => e.stopPropagation());
+    input.addEventListener("change", () => take(input.files?.[0]));
+    ["dragenter", "dragover"].forEach((t) =>
+      dz.addEventListener(t, (e) => {
+        e.preventDefault();
+        dz.classList.add("dragover");
+      }),
+    );
+    ["dragleave", "drop"].forEach((t) =>
+      dz.addEventListener(t, (e) => {
+        e.preventDefault();
+        dz.classList.remove("dragover");
+      }),
+    );
+    dz.addEventListener("drop", (e) =>
+      take((e as DragEvent).dataTransfer?.files[0]),
+    );
+    remove.addEventListener("click", (e) => {
       e.stopPropagation();
       uploads[key] = null;
       input.value = "";
-      preview.classList.remove("show");
-      dz.classList.remove("filled");
       img.src = "";
+      prev.classList.remove("show");
+      dz.classList.remove("filled");
     });
   }
-
   wireDropzone("logo");
   wireDropzone("foto");
 
-  waInput.addEventListener("input", () => {
-    waInput.value = waInput.value.replace(/\D/g, "");
-  });
-
-  form.addEventListener("submit", (e: SubmitEvent) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
+    const cur = intent();
+    const n = nama.value.trim();
+    const num = wa.value.replace(/\D/g, "");
+    const msg = pesan.value.trim();
 
-    const nama = namaInput.value.trim();
-    const wa = waInput.value.trim().replace(/\D/g, "");
-    const kategori = kategoriSelect.value;
-    const budget = budgetSelect.value;
-    const jalur =
-      form.querySelector<HTMLInputElement>('input[name="jalur"]:checked')
-        ?.value ?? "";
-
-    let valid = true;
-    let firstInvalidField: string | null = null;
-
-    if (!nama) {
-      setInvalid("field-nama", true);
-      valid = false;
-      firstInvalidField ??= "field-nama";
-    } else {
-      setInvalid("field-nama", false);
+    const checks: [string, boolean][] = [
+      ["field-intent", !cur],
+      ["field-nama", !n],
+      ["field-wa", num.length < 8],
+    ];
+    if (cur === "maklon") {
+      checks.push(
+        ["field-kategori", !kategori.value],
+        ["field-budget", !budget.value],
+      );
+    } else if (cur) {
+      checks.push(["field-pesan", !msg]);
     }
-    if (wa.length < 8) {
-      setInvalid("field-wa", true);
-      valid = false;
-      firstInvalidField ??= "field-wa";
-    } else {
-      setInvalid("field-wa", false);
-    }
-    if (!kategori) {
-      setInvalid("field-kategori", true);
-      valid = false;
-      firstInvalidField ??= "field-kategori";
-    } else {
-      setInvalid("field-kategori", false);
-    }
-    if (!budget) {
-      setInvalid("field-budget", true);
-      valid = false;
-      firstInvalidField ??= "field-budget";
-    } else {
-      setInvalid("field-budget", false);
-    }
-
-    if (!valid) {
-      if (firstInvalidField) {
-        byId(firstInvalidField).scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-        byId(firstInvalidField)
-          .querySelector("input, select")
-          ?.dispatchEvent(new Event("focus"));
-        (
-          byId(firstInvalidField).querySelector(
-            "input, select",
-          ) as HTMLElement | null
-        )?.focus();
-      }
+    form
+      .querySelectorAll(".invalid")
+      .forEach((el) => el.classList.remove("invalid"));
+    checks.forEach(([id, bad]) => $(id).classList.toggle("invalid", bad));
+    const first = checks.find(([, bad]) => bad);
+    if (first) {
+      const el = $(first[0]);
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.querySelector<HTMLElement>("input, select, textarea")?.focus();
       return;
     }
 
-    submitBtn.disabled = true;
-    submitBtnLabel.innerHTML =
-      '<span class="btn-spinner"></span>Mengalihkan ke WhatsApp...';
+    const opening: Record<Intent, string> = {
+      produk: "saya mau bertanya soal produk",
+      pesanan: "saya mau bertanya soal pesanan/pembelian",
+      maklon: "saya mau konsultasi maklon",
+      lainnya: "saya ada pertanyaan",
+    };
+    const lines = [`Nama: ${n}`];
+    if ((cur === "produk" || cur === "pesanan") && produk.value) {
+      lines.push(`Produk: ${produk.value}`);
+    }
+    if (cur === "maklon") {
+      lines.push(
+        `Kategori Produk: ${label(kategori)}`,
+        `Budget Produksi: ${label(budget)}`,
+      );
+      const jalur = form.querySelector<HTMLInputElement>(
+        'input[name="jalur"]:checked',
+      )?.value;
+      if (jalur) lines.push(`Posisi: ${jalur}`);
+    }
+    if (msg) lines.push(`${cur === "maklon" ? "Catatan" : "Pesan"}: ${msg}`);
+    let text = `Assalamualaikum, ${opening[cur as Intent]}:\n\n${lines.join("\n")}`;
+    if (cur === "maklon" && (uploads.logo || uploads.foto)) {
+      text += "\n\n(Logo/referensi produk akan saya kirim di chat ini)";
+    }
 
-    const kategoriLabel =
-      kategoriSelect.selectedOptions[0]?.textContent ?? kategori;
-    const budgetLabel = budgetSelect.selectedOptions[0]?.textContent ?? budget;
-
-    const pesan =
-      "Assalamualaikum, saya mau konsultasi maklon:\n\n" +
-      `Nama: ${nama}\n` +
-      `Kategori Produk: ${kategoriLabel}\n` +
-      `Budget Produksi: ${budgetLabel}` +
-      (jalur ? `\nPosisi: ${jalur}` : "") +
-      (uploads.logo || uploads.foto
-        ? "\n\n(Saya juga sudah menyiapkan logo/referensi produk, akan saya kirim di chat ini)"
-        : "");
-
-    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
-
-    window.setTimeout(() => {
-      form.classList.add("hide");
-      successBox.classList.add("show");
-      window.open(waUrl, "_blank");
-    }, 500);
+    const url = `https://wa.me/${cur === "maklon" ? WA_MAKLON : WA_UMUM}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+    form.classList.add("hide");
+    $("successBox").classList.add("show");
   });
 });
