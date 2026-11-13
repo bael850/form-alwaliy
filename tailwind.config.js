@@ -4,32 +4,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        emerald: {
-          950: "#0E241C",
-          900: "#123328",
-          700: "#1E5340",
-          600: "#2C6E56",
-        },
-        gold: {
-          DEFAULT: "#C69A2E",
-          light: "#E7C871",
-        },
-        cream: "#FBF7EC",
-        parchment: "#F3EDDD",
-        ink: {
-          DEFAULT: "#161F1A",
-          soft: "#48564D",
-        },
-        line: "#E3DAC0",
-        error: "#B4453B",
+        forest: { DEFAULT: "#1b4332", light: "#2d6a4f", deep: "#122c21" },
+        gold: { DEFAULT: "#d4af6a", light: "#e6c98f", dark: "#8a6a2b" },
+        cream: "#faf8f4",
+        ink: { DEFAULT: "#1a1a1a", soft: "#505a53" },
+        line: "#ddd6c6",
+        error: "#b4453b",
       },
       fontFamily: {
-        heading: ['"Lora"', "serif"],
-        sans: ['"Plus Jakarta Sans"', "sans-serif"],
+        heading: ['"Plus Jakarta Sans"', "sans-serif"],
+        sans: ["Inter", "sans-serif"],
+        arabic: ["Amiri", "serif"],
       },
-      borderRadius: {
-        card: "20px",
-      },
+      borderRadius: { card: "6px" },
     },
   },
   plugins: [],

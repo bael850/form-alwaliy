@@ -130,6 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const wa = waInput.value.trim().replace(/\D/g, "");
     const kategori = kategoriSelect.value;
     const budget = budgetSelect.value;
+    const jalur =
+      form.querySelector<HTMLInputElement>('input[name="jalur"]:checked')
+        ?.value ?? "";
 
     let valid = true;
     let firstInvalidField: string | null = null;
@@ -194,6 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `Nama: ${nama}\n` +
       `Kategori Produk: ${kategoriLabel}\n` +
       `Budget Produksi: ${budgetLabel}` +
+      (jalur ? `\nPosisi: ${jalur}` : "") +
       (uploads.logo || uploads.foto
         ? "\n\n(Saya juga sudah menyiapkan logo/referensi produk, akan saya kirim di chat ini)"
         : "");

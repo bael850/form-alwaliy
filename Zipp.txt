@@ -1,0 +1,1 @@
+Compress-Archive -Path src, index.html, package.json, tailwind.config.js, tsconfig.json, README.md, .gitignore -DestinationPath ..\alwaliy-form.zip
